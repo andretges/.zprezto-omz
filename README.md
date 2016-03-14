@@ -14,3 +14,10 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto-omz/modules/git-omz/init.zsh"
 fi
 ```
+
+And then they can be enabled in `.zpreztorc` as usual:
+```zsh
+zstyle ':prezto:load' pmodule \
+  'git-omz' \
+  'rails-omz' \
+```
