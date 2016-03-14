@@ -26,13 +26,6 @@ zstyle -s ':prezto:module:git:status:ignore' submodules '_git_status_ignore_subm
 # Functions
 #
 
-# The name of the current branch
-# Back-compatibility wrapper for when this function was defined here in
-# the plugin, before being pulled in to core lib/git.zsh as git_current_branch()
-# to fix the core -> git plugin dependency.
-function current_branch() {
-  git_current_branch
-}
 # Pretty log messages
 function _git_log_prettily(){
   if ! [ -z $1 ]; then
@@ -105,7 +98,7 @@ alias gfo='git fetch origin'
 alias gg='git gui citool'
 alias gga='git gui citool --amend'
 ggf() {
-[[ "$#" != 1 ]] && local b="$(git_current_branch)"
+[[ "$#" != 1 ]] && local b="$(git-branch-current)"
 git push --force origin "${b:=$1}"
 }
 compdef _git ggf=git-checkout
@@ -113,23 +106,23 @@ ggl() {
 if [[ "$#" != 0 ]] && [[ "$#" != 1 ]]; then
 git pull origin "${*}"
 else
-[[ "$#" == 0 ]] && local b="$(git_current_branch)"
+[[ "$#" == 0 ]] && local b="$(git-branch-current)"
 git pull origin "${b:=$1}"
 fi
 }
 compdef _git ggl=git-checkout
-alias ggpull='git pull origin $(git_current_branch)'
+alias ggpull='git pull origin $(git-branch-current)'
 compdef _git ggpull=git-checkout
 ggp() {
 if [[ "$#" != 0 ]] && [[ "$#" != 1 ]]; then
 git push origin "${*}"
 else
-[[ "$#" == 0 ]] && local b="$(git_current_branch)"
+[[ "$#" == 0 ]] && local b="$(git-branch-current)"
 git push origin "${b:=$1}"
 fi
 }
 compdef _git ggp=git-checkout
-alias ggpush='git push origin $(git_current_branch)'
+alias ggpush='git push origin $(git-branch-current)'
 compdef _git ggpush=git-checkout
 ggpnp() {
 if [[ "$#" == 0 ]]; then
@@ -139,9 +132,9 @@ ggl "${*}" && ggp "${*}"
 fi
 }
 compdef _git ggpnp=git-checkout
-alias ggsup='git branch --set-upstream-to=origin/$(git_current_branch)'
+alias ggsup='git branch --set-upstream-to=origin/$(git-branch-current)'
 ggu() {
-[[ "$#" != 1 ]] && local b="$(git_current_branch)"
+[[ "$#" != 1 ]] && local b="$(git-branch-current)"
 git pull --rebase origin "${b:=$1}"
 }
 compdef _git ggu=git-checkout
