@@ -2,7 +2,7 @@
 Some oh-my-zsh plugins ported to zprezto
 
 To start using oh-my-zsh plugins with zprezto, add this dirty hack to your `.zshrc`:
-```
+```zsh
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   zstyle ":prezto:module:rails-omz" loaded 'yes'
