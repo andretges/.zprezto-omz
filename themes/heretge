@@ -1,0 +1,45 @@
+# Simple theme based on my old zsh settings.
+
+function prompt_heretge_precmd {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+
+  # Get Git repository information.
+  if (( $+functions[git-info] )); then
+    git-info
+  fi
+}
+
+function prompt_heretge_setup {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+  prompt_opts=(cr percent subst)
+
+  # Load required functions.
+  autoload -Uz add-zsh-hook
+
+  # Add hook for calling git-info before each command.
+  add-zsh-hook precmd prompt_heretge_precmd
+
+  # Set editor-info parameters.
+  # zstyle ':prezto:module:editor:info:completing' format '%B%F{red}...%f%b'
+  # zstyle ':prezto:module:editor:info:keymap:primary' format "%B%F{green}❯%f%b"
+  # zstyle ':prezto:module:editor:info:keymap:alternate' format "%B%F{magenta}❮%f%b"
+
+  # Set git-info parameters.
+  zstyle ':prezto:module:git:info' verbose 'no'
+  zstyle ':prezto:module:git:info:branch' format '%F{yellow}%b%f'
+  # zstyle ':prezto:module:git:info:dirty' format '%B%F{red}●%f%b'
+  # zstyle ':prezto:module:git:info:dirty' format '%B%F{red}✗%f%b'
+  zstyle ':prezto:module:git:info:dirty' format '%F{yellow}✗%f'
+  zstyle ':prezto:module:git:info:indexed' format ' '
+  zstyle ':prezto:module:git:info:unindexed' format ' '
+  zstyle ':prezto:module:git:info:untracked' format ' '
+  zstyle ':prezto:module:git:info:keys' format 'prompt' '(%b%D)'
+
+  PROMPT='> '
+  # RPROMPT='%F{cyan}%~%f ${git_info:+${(e)git_info[prompt]}}${editor_info[keymap]}@%m'
+  RPROMPT='%~${git_info:+${(e)git_info[prompt]}}@%m'
+}
+
+prompt_heretge_setup "$@"
