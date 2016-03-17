@@ -202,6 +202,9 @@ alias gsps='git show --pretty=short --show-signature'
 alias gsr='git svn rebase'
 alias gss='git status -s'
 alias gst='git status'
+
+alias gstls='git ls-files -m -o --exclude-standard'
+
 alias gsta='git stash'
 alias gstaa='git stash apply'
 alias gstd='git stash drop'
